@@ -27,7 +27,7 @@
             /* Fundo Circuito Tech */
             background-image: 
                 linear-gradient(rgba(5, 7, 10, 0.94), rgba(5, 7, 10, 0.94)),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM22.485 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM0 22.485l.828.83 1.415-1.415-.828-.828.828-.828L.828 18.77l-.828.828-.828-.828L-1.415 20.18l.828.828.828-.828 1.415 1.415-.828.828zM0 54.627l.828.83 1.415-1.415-.828-.828.828-.828L.828 50.91l-.828.828-.828-.828L-1.415 52.32l.828.828.828-.828 1.415 1.415-.828.828zM50.91 0l-.828.828-.828-.828L47.84-1.415l.828-.828.828.828L50.91 0zM18.77 0l-.828.828-.828-.828L15.7-1.415l.828-.828.828.828L18.77 0zM0 18.77l.828-.828-.828-.828L1.415 15.7l.828.828-.828.828L0 18.77zM0 50.91l.828-.828-.828-.828L1.415 47.84l.828.828-.828.828L0 50.91z' fill='%235eff5e' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.83.828 3.585 3.585-1.415 1.415-1.414-1.414-2.72 2.72-2.304 2.305-1.415-1.414 2.305-2.305 2.72-2.72-1.414-1.414-3.585 3.585-.828-.828-3.585-3.585 1.415-1.415 3.585 3.585.828-.828-.828-.828 3.585-3.585 1.415 1.415-3.585 3.585 1.414 1.414 2.72-2.72 2.305-2.305-1.414-1.415-2.305 2.305-2.72 2.72 1.415 1.415 3.585-3.585.828.828zM22.485 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.83.828 3.585 3.585-1.415 1.415-1.414-1.414-2.72 2.72-2.304 2.305-1.415-1.414 2.305-2.305 2.72-2.72-1.414-1.414-3.585 3.585-.828-.828-3.585-3.585 1.415-1.415 3.585 3.585.828-.828-.828-.828 3.585-3.585 1.415 1.415-3.585 3.585 1.414 1.414 2.72-2.72 2.305-2.305-1.414-1.415-2.305 2.305-2.72 2.72 1.415 1.415 3.585-3.585.828.828z' fill='%235eff5e' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
 
         /* --- Header --- */
@@ -111,7 +111,13 @@
             gap: 10px;
             overflow-x: auto;
             padding-bottom: 5px;
+            /* Scroll suave para mobile */
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
         }
+        
+        /* Ocultar barra de rolagem das categorias */
+        .categories::-webkit-scrollbar { display: none; }
 
         .cat-btn {
             background: transparent;
@@ -320,6 +326,8 @@
             width: 90%;
             max-width: 500px;
             border: 1px solid var(--border-color);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .form-group { margin-bottom: 15px; }
@@ -333,12 +341,39 @@
         .btn-cancel { background: #333; color: #fff; border: none; padding: 10px; border-radius: 5px; flex: 1; cursor: pointer;}
         .btn-confirm { background: var(--accent); color: #000; border: none; padding: 10px; border-radius: 5px; flex: 1; font-weight: bold; cursor: pointer;}
 
-        /* Responsividade */
+        /* Responsividade e Mobile */
         @media (max-width: 768px) {
             .header-content { align-items: stretch; }
             .controls-area { flex-direction: column; }
             .search-box { width: 100%; max-width: none; }
             .cart-trigger { width: 100%; justify-content: center; }
+            
+            .products-grid {
+                /* Reduzir tamanho mínimo da coluna em tablets */
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        /* Ajustes Específicos para Celular (Telas pequenas) */
+        @media (max-width: 480px) {
+            .logo-text { font-size: 1.4rem; }
+            .logo-icon { font-size: 2rem; }
+            
+            .container { padding: 0 15px; margin: 20px auto; }
+            
+            /* Em celulares, 1 coluna para melhor visualização */
+            .products-grid { grid-template-columns: 1fr; }
+            
+            .product-card { padding: 15px; }
+            .product-img-container { height: 160px; }
+            
+            /* Carrinho ocupa tela inteira */
+            .cart-panel { max-width: 100%; width: 100%; }
+            
+            /* Modal Checkout responsivo */
+            .checkout-box { width: 95%; padding: 20px; }
+            .btn-row { flex-direction: column; }
         }
     </style>
 </head>
