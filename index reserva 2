@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPlay Store - Tech Edition Final</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-body: #0b0c10;
+            --bg-card-dark: #15161c;
+            --accent-green: #6eea70; /* Verde Neon */
+            --accent-glow: rgba(110, 234, 112, 0.4);
+            --text-white: #ffffff;
+            --text-gray: #a1a1a1;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #08090b;
+            color: var(--text-white);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            /* Fundo Tech/Circuito */
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(20, 24, 30, 0.95) 0%, rgba(8, 9, 11, 1) 80%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236eea70' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* --- Header --- */
+        header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
+            background: rgba(8, 9, 11, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .logo-glow {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(110,234,112,0.15) 0%, transparent 70%);
+            position: absolute;
+            top: -30px;
+            z-index: -1;
+            border: 1px solid rgba(110,234,112,0.2);
+            box-shadow: 0 0 25px rgba(110,234,112,0.1);
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            color: var(--accent-green);
+            text-shadow: 0 0 15px var(--accent-glow);
+            margin-bottom: 5px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        /* Controles (Navegação + Busca + Carrinho) */
+        .controls-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background: rgba(110, 234, 112, 0.05);
+            box-shadow: 0 0 10px rgba(110, 234, 112, 0.1);
+        }
+
+        /* Caixa de Pesquisa */
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 8px 15px;
+            margin: 0 10px; /* Espaçamento lateral */
+            transition: 0.3s;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 10px rgba(110, 234, 112, 0.2);
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            margin-left: 10px;
+            width: 220px;
+            font-size: 0.9rem;
+        }
+
+        /* Botão Carrinho / Agendar */
+        .btn-cart-main {
+            background-color: var(--accent-green);
+            color: #000;
+            font-weight: 800;
+            padding: 10px 25px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-cart-main:hover {
+            transform: scale(1.05);
+            background-color: #5cd660;
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        /* --- Layout --- */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Sidebar (Carrinho) */
+        .sidebar-cart {
+            background-color: #1a1c20;
+            border-radius: 16px;
+            padding: 25px;
+            height: fit-content;
+            max-height: 85vh; /* Limite de altura */
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 130px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .cart-title { font-weight: 600; font-size: 1.1rem; color: var(--accent-green); }
+
+        .cart-items-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-height: 100px; /* Altura mínima se vazio */
+        }
+
+        /* Scrollbar customizada para o carrinho */
+        .cart-items-list::-webkit-scrollbar { width: 5px; }
+        .cart-items-list::-webkit-scrollbar-track { background: #111; }
+        .cart-items-list::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 8px;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+
+        .cart-thumb {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 6px;
+            object-fit: cover;
+            padding: 2px;
+        }
+
+        .cart-info { flex: 1; }
+        .cart-info h4 { font-size: 0.85rem; color: #fff; margin-bottom: 2px; }
+        .cart-info p { font-size: 0.8rem; color: var(--accent-green); font-weight: bold; }
+
+        .btn-remove {
+            color: #ff5555;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-remove:hover { color: #ff0000; transform: scale(1.1); }
+
+        .cart-footer {
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background-color: var(--accent-green);
+            color: #000;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .btn-checkout:disabled { background-color: #333; color: #666; cursor: not-allowed; box-shadow: none; }
+        .btn-checkout:not(:disabled):hover { background-color: #5cd660; box-shadow: 0 0 15px var(--accent-glow); }
+
+        /* Conteúdo Principal */
+        .section-header {
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            border-left: 4px solid var(--accent-green);
+            padding-left: 15px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: #1e2126;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Card Destaque (Estilo Claro como na imagem) */
+        .card.featured {
+            grid-column: span 2; /* Ocupa 2 colunas */
+            background-color: #e3e3e3;
+            color: #000;
+            border: none;
+        }
+        
+        .card.featured .card-title { font-size: 1.5rem; }
+        .card.featured .price { color: #000; }
+        .card.featured .btn-add { background-color: #000; color: #fff; }
+        .card.featured .btn-add:hover { background-color: #333; }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            /* Filtro para dar profundidade */
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+            mix-blend-mode: normal;
+        }
+        
+        .card.featured .card-img { mix-blend-mode: multiply; } /* Remove fundo branco visualmente */
+
+        .card-info h3 { font-size: 1.1rem; margin-bottom: 5px; font-weight: 700; }
+        .card-info p { font-size: 0.9rem; opacity: 0.7; margin-bottom: 15px; min-height: 40px; }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price { font-size: 1.3rem; font-weight: 800; color: var(--accent-green); }
+
+        .btn-add {
+            background-color: var(--accent-green);
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-add:hover { transform: scale(1.05); }
+
+        /* Modal Checkout */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-content {
+            background: #15161c;
+            border: 1px solid var(--accent-green);
+            padding: 30px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 0 40px rgba(110, 234, 112, 0.15);
+        }
+
+        .modal-content h2 { color: var(--accent-green); text-align: center; margin-bottom: 20px; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #ccc; font-size: 0.9rem; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px;
+            background: #08090b; border: 1px solid #333;
+            color: #fff; border-radius: 8px; font-size: 1rem;
+        }
+        .form-group input:focus { border-color: var(--accent-green); outline: none; }
+
+        .modal-actions { display: flex; gap: 15px; margin-top: 25px; }
+        .btn-modal { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+        .btn-cancel { background: #333; color: #fff; }
+        .btn-confirm { background: var(--accent-green); color: #000; }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .card.featured { grid-column: span 1; }
+        }
+
+        @media (max-width: 900px) {
+            .layout-grid { grid-template-columns: 1fr; }
+            
+            /* Sidebar vira modal no mobile */
+            .sidebar-cart { 
+                display: none; /* Esconde por padrão no mobile */
+                position: fixed;
+                bottom: 0; left: 0; right: 0; top: auto;
+                width: 100%;
+                z-index: 1000;
+                border-radius: 20px 20px 0 0;
+                max-height: 80vh;
+                animation: slideUp 0.3s;
+                border: 1px solid var(--accent-green);
+            }
+            .sidebar-cart.active { display: flex; }
+
+            .controls-bar {
+                flex-direction: row; /* Mantém linha mas quebra se precisar */
+                justify-content: center;
+            }
+            
+            /* Ajuste da ordem para mobile se ficar muito apertado */
+            .search-box { width: 100%; order: 10; margin-top: 10px; }
+            .btn-cart-main { order: 5; }
+        }
+
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-glow"></div>
+                <i class="fab fa-apple logo-icon"></i>
+                <div class="logo-text">iPLAY</div>
+            </div>
+            
+            <div class="controls-bar">
+                <!-- Filtros -->
+                <button class="nav-btn active" onclick="filter('all')">Todos</button>
+                <button class="nav-btn" onclick="filter('aparelho')">Aparelhos</button>
+                <button class="nav-btn" onclick="filter('notebook')">MacBooks</button>
+                <button class="nav-btn" onclick="filter('acessorio')">Acessórios</button>
+                
+                <!-- Pesquisa AGORA no final antes do carrinho -->
+                <div class="search-box">
+                    <i class="fas fa-search" style="color: #888;"></i>
+                    <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="search()">
+                </div>
+                
+                <!-- Carrinho por último -->
+                <button class="btn-cart-main" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i> 
+                    <span id="cartCountBadge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout-grid">
+        
+        <!-- Sidebar do Carrinho -->
+        <aside class="sidebar-cart" id="cartSidebar">
+            <div class="cart-header">
+                <span class="cart-title">Meu Carrinho</span>
+                <button onclick="toggleCart()" style="background:none; border:none; color:#fff; cursor:pointer; font-size:1.2rem;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="cart-items-list" id="cartItemsContainer">
+                <!-- Itens injetados via JS -->
+                <div style="text-align: center; padding: 30px; color: #666;">
+                    Seu carrinho está vazio
+                </div>
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-total-row">
+                    <span>Total:</span>
+                    <span id="cartTotalValue">R$ 0,00</span>
+                </div>
+                <button class="btn-checkout" id="btnCheckout" onclick="openCheckoutModal()" disabled>
+                    Finalizar Compra
+                </button>
+            </div>
+        </aside>
+
+        <!-- Grade de Produtos -->
+        <main>
+            <div class="section-header" id="sectionTitle">Destaques da Loja</div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Produtos injetados via JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content">
+            <h2>Finalizar Pedido</h2>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label>Seu Nome</label>
+                    <input type="text" required placeholder="Ex: João Silva">
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp / Telefone</label>
+                    <input type="tel" required placeholder="(11) 99999-9999">
+                </div>
+                <div class="form-group">
+                    <label>Endereço</label>
+                    <input type="text" required placeholder="Rua, Número, Complemento">
+                </div>
+                <div class="form-group">
+                    <label>Forma de Pagamento</label>
+                    <select>
+                        <option>PIX (Aprovação Imediata)</option>
+                        <option>Cartão de Crédito</option>
+                        <option>Boleto Bancário</option>
+                    </select>
+                </div>
+                
+                <div style="text-align: right; margin: 20px 0; font-size: 1.2rem; font-weight: bold;">
+                    Total: <span id="modalTotal" style="color: var(--accent-green);">R$ 0,00</span>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal btn-cancel" onclick="closeCheckoutModal()">Cancelar</button>
+                    <button type="submit" class="btn-modal btn-confirm">Confirmar Pedido</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- DADOS DOS PRODUTOS (Com Imagens Reais) ---
+        const produtos = [
+            {
+                id: 1,
+                nome: "iPhone 15 Pro Max",
+                cat: "aparelho",
+                preco: 8599.00,
+                desc: "1TB Natural Titanium. O iPhone mais poderoso já feito.",
+                img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800&auto=format&fit=crop",
+                featured: true
+            },
+            {
+                id: 2,
+                nome: "MacBook Pro 14\"",
+                cat: "notebook",
+                preco: 14299.00,
+                desc: "Chip M3 Pro, 18GB RAM, 512GB SSD. Space Black.",
+                img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop",
+                featured: false
+            },
+            {
+                id: 3,
+                nome: "Apple Watch Ultra 2",
+                cat: "acessorio",
+                preco: 6299.00,
+                desc: "Caixa de Titânio 49mm, Pulseira Oceano.",
+                img: "https://images.unsplash.com/photo-1664478546384-d57ffe74a7b1?q=80&w=800&auto=format&fit=crop",
+                featured: false
+            },
+            {
+                id: 4,
+                nome: "AirPods Max",
+                cat: "acessorio",
+                preco: 4599.00,
+                desc: "Áudio de alta fidelidade e cancelamento de ruído.",
+                img: "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=800&auto=format&fit=crop",
+                featured: false
+            },
+            {
+                id: 5,
+                nome: "iPad Pro 12.9\"",
+                cat: "aparelho",
+                preco: 9499.00,
+                desc: "Chip M2, Tela XDR. A melhor experiência em tablet.",
+                img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&auto=format&fit=crop",
+                featured: true
+            },
+            {
+                id: 6,
+                nome: "Carregador MagSafe",
+                cat: "acessorio",
+                preco: 249.00,
+                desc: "Carregamento sem fio rápido e magnético.",
+                img: "https://images.unsplash.com/photo-1603402919000-000000000000?auto=format&fit=crop&w=400&q=80", // Fallback simulado
+                // Usando outra imagem de carregador pois a do magsafe as vezes falha
+                img: "https://images.unsplash.com/photo-1625842268584-8f3296236761?q=80&w=800&auto=format&fit=crop",
+                featured: false
+            },
+            {
+                id: 7,
+                nome: "Magic Mouse 2",
+                cat: "acessorio",
+                preco: 699.00,
+                desc: "Superfície Multi-Touch preta. Recarregável.",
+                img: "https://images.unsplash.com/photo-1615526675221-76478951d02d?q=80&w=800&auto=format&fit=crop",
+                featured: false
+            },
+            {
+                id: 8,
+                nome: "Apple Vision Pro",
+                cat: "aparelho",
+                preco: 24999.00,
+                desc: "Computação espacial. O futuro chegou.",
+                img: "https://images.unsplash.com/photo-1709650364998-d7c713840656?q=80&w=800&auto=format&fit=crop",
+                featured: true
+            }
+        ];
+
+        let carrinho = [];
+
+        // --- RENDERIZAÇÃO ---
+        function renderProdutos(lista) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = lista.map(item => `
+                <div class="card ${item.featured ? 'featured' : ''}">
+                    <img src="${item.img}" class="card-img" alt="${item.nome}">
+                    <div class="card-info">
+                        <h3>${item.nome}</h3>
+                        <p>${item.desc}</p>
+                    </div>
+                    <div class="card-actions">
+                        <span class="price">R$ ${item.preco.toLocaleString('pt-BR')}</span>
+                        <button class="btn-add" onclick="adicionarCarrinho(${item.id})">
+                            Adicionar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderCarrinho() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalEl = document.getElementById('cartTotalValue');
+            const badge = document.getElementById('cartCountBadge');
+            const btnCheckout = document.getElementById('btnCheckout');
+
+            const totalQtd = carrinho.reduce((acc, item) => acc + item.qtd, 0);
+            const totalValor = carrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
+
+            badge.innerText = totalQtd;
+            totalEl.innerText = totalValor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            btnCheckout.disabled = carrinho.length === 0;
+
+            if (carrinho.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">Seu carrinho está vazio</div>';
+                return;
+            }
+
+            container.innerHTML = carrinho.map(item => `
+                <div class="cart-item">
+                    <img src="${item.img}" class="cart-thumb">
+                    <div class="cart-info">
+                        <h4>${item.nome}</h4>
+                        <p>${(item.preco * item.qtd).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <button onclick="alterarQtd(${item.id}, -1)" style="background:#333; color:#fff; border:none; width:20px; border-radius:4px; cursor:pointer;">-</button>
+                        <span style="color:#fff; font-size:0.9rem;">${item.qtd}</span>
+                        <button onclick="alterarQtd(${item.id}, 1)" style="background:#333; color:#fff; border:none; width:20px; border-radius:4px; cursor:pointer;">+</button>
+                    </div>
+                    <button class="btn-remove" onclick="removerItem(${item.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // --- LÓGICA DO CARRINHO ---
+        function adicionarCarrinho(id) {
+            const prod = produtos.find(p => p.id === id);
+            const itemCarrinho = carrinho.find(i => i.id === id);
+
+            if (itemCarrinho) {
+                itemCarrinho.qtd++;
+            } else {
+                carrinho.push({ ...prod, qtd: 1 });
+            }
+            renderCarrinho();
+            
+            // Abre o carrinho no mobile se adicionar
+            if(window.innerWidth <= 900) {
+                document.getElementById('cartSidebar').classList.add('active');
+            }
+        }
+
+        function alterarQtd(id, delta) {
+            const item = carrinho.find(i => i.id === id);
+            if(item) {
+                item.qtd += delta;
+                if(item.qtd <= 0) removerItem(id);
+                else renderCarrinho();
+            }
+        }
+
+        function removerItem(id) {
+            carrinho = carrinho.filter(i => i.id !== id);
+            renderCarrinho();
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            if(window.innerWidth > 900) {
+                // Desktop: talvez um efeito visual ou scroll suave
+            } else {
+                // Mobile: Toggle class
+                sidebar.classList.toggle('active');
+            }
+        }
+
+        // --- FILTROS E PESQUISA ---
+        function filter(cat) {
+            // UI Botões
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (cat === 'all') {
+                document.getElementById('sectionTitle').innerText = 'Destaques da Loja';
+                renderProdutos(produtos);
+            } else {
+                const filtrados = produtos.filter(p => p.cat === cat);
+                document.getElementById('sectionTitle').innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
+                renderProdutos(filtrados);
+            }
+        }
+
+        function search() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtrados = produtos.filter(p => p.nome.toLowerCase().includes(term));
+            renderProdutos(filtrados);
+        }
+
+        // --- CHECKOUT ---
+        function openCheckoutModal() {
+            const totalValor = carrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
+            document.getElementById('modalTotal').innerText = totalValor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.remove('active');
+        }
+
+        document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Pedido Confirmado! 🚀\nEm breve entraremos em contato.');
+            carrinho = [];
+            renderCarrinho();
+            closeCheckoutModal();
+            // Fecha sidebar no mobile
+            document.getElementById('cartSidebar').classList.remove('active');
+        });
+
+        // INICIALIZAÇÃO
+        renderProdutos(produtos);
+    </script>
+</body>
+</html>
